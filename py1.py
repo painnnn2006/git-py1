@@ -6,13 +6,7 @@ import shutil, zipfile
 from zipfile import ZipFile
 from shutil import make_archive
 
-#anhvldaide
-#hello world
-#test 
 
-##########################################
-
-##############################
 # load database
 path_folder= input("input path here: ")
 list_png = glob.glob(path_folder+'/**/*.png', recursive=True)
