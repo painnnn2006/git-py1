@@ -7,6 +7,11 @@ from zipfile import ZipFile
 from shutil import make_archive
 
 
+
+PIL.PngImagePlugin.MAX_TEXT_CHUNK= 1048576
+PIL.PngImagePlugin.MAX_TEXT_MEMORY= 97108864
+
+
 # load database
 path_folder= input("input path here: ")
 list_png = glob.glob(path_folder+'/**/*.png', recursive=True)
