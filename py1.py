@@ -1,5 +1,5 @@
 import numpy as np
-import os, glob, qrcode, openpyxl
+import os, glob, PIL, qrcode, openpyxl
 from PIL import Image, ImageDraw, ImageFont
 from os import path
 import shutil, zipfile
