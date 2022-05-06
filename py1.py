@@ -1,6 +1,6 @@
 import numpy as np
 import os, glob, PIL, qrcode, openpyxl
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 from os import path
 import shutil, zipfile
 from zipfile import ZipFile
