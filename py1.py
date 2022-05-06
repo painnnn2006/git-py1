@@ -13,7 +13,7 @@ PIL.PngImagePlugin.MAX_TEXT_MEMORY= 97108864
 
 
 # load database
-path_folder= input("input path here: ")
+path_folder= input("input path '''''''WAL + WA'''''''' here: ")
 list_png = glob.glob(path_folder+'/**/*.png', recursive=True)
 list_jpg = glob.glob(path_folder+'/**/*.jpg', recursive=True)
 list_xlsx = glob.glob(path_folder+'/**/*.xlsx', recursive=True)

@@ -9,7 +9,7 @@ PIL.PngImagePlugin.MAX_TEXT_CHUNK= 1048576
 PIL.PngImagePlugin.MAX_TEXT_MEMORY= 97108864
 
 # load database
-path_folder= input("input path here: ")
+path_folder= input("input path '''''2D PRODUCT''''' here: ")
 list_ds = glob.glob(path_folder+'/**/*.png', recursive=True)
 for ds in list_ds:
     #detect info product
