@@ -147,7 +147,7 @@ for fin in list_fin:
 
 
     
-print("Finish. Good luck have fun:) ")
+print("Finish!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ")
 
 
 
