@@ -24,7 +24,7 @@ for ds in list_ds:
     folder_name = ds_name.split('.')[3]
 
 
-    print(ds_name.split('-')[1].split('_')[3]," begin render...")
+    print(ds_final_name," begin render...")
     im=Image.open(ds)
     img_r = im.resize((ds_w_s,ds_h_s))
     
@@ -50,7 +50,7 @@ for ds in list_ds:
 
     out.save(path_final+"/"+ds_final_name+ds_ex, dpi=(ds_dpi,ds_dpi))
 
-    print(ds_name.split('-')[1].split('_')[3]," Done")
+    print(ds_final_name," Done")
 
     
 print("Finish. Good luck have fun:) ")
