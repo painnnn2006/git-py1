@@ -31,7 +31,8 @@ for ds in list_ds:
 	#detect info product
 	ds_name= os.path.splitext(os.path.basename(ds))[0]
 	ds_ex=os.path.splitext(os.path.basename(ds))[1]
-	dup_quan = ds_name.split("_")[1]  
+	dup_quan = int(ds_name.split("-")[1])
+	print(dup_quan)
 	ds_x, ds_y,ds_dpi, ds_w_s, ds_h_s, ds_code_sz = 3000,200,300,3500,2500,50   # định vị code, dim standard, code sz
 	
 	fnt= ImageFont.truetype("arial.ttf",ds_code_sz)
@@ -41,20 +42,25 @@ for ds in list_ds:
 	img = Image.open(ds)
 	
 
-	ds_img_mode= img_r.mode  #hệ màu
+	#ds_img_mode= img_r.mode  #hệ màu
 
 	d = ImageDraw.Draw(img)
-	for j in range(0,dup_quan-1):
-		bl= i + j + 1
+	for j in range(0,dup_quan):
+		bl= str(i + j +1)
+		path_pack_final = path_final + "/" + ds_name.split("-")[0]
+		#if os.path.exists(path_pack_final) == False: 
+		#	os.mkdir(path_pack_final)
 		d.text((ds_x,ds_y),'Block' + bl,font= fnt, fill=(0,0,0))
-		img_r.save(path_final+"/Block "+ bl +ds_ex, dpi=(ds_dpi,ds_dpi))
+		img.save(path_final+"/Block_"+ bl +ds_ex, dpi=(ds_dpi,ds_dpi))
+		
+		print("Block_" + bl + " Done")
 
-
-	i = i+1
+	i = i+dup_quan
 	print(i)
 
 
-	print(ds_name," Done")
+
+	
 
 	
 print("Finish. Good luck have fun:) ")
