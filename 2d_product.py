@@ -22,6 +22,7 @@ for ds in list_ds:
     ds_h_s=int(ds_name.split('.')[2])
     ds_final_name= ds_name.split('.')[0]
     folder_name = ds_name.split('.')[3]
+    dup_ds = int(ds_name.split('.')[4])
 
 
     print(ds_final_name," begin render...")
@@ -48,7 +49,13 @@ for ds in list_ds:
     if os.path.exists(path_final) == False: 
         os.mkdir(path_final)
 
-    out.save(path_final+"/"+ds_final_name+ds_ex, dpi=(ds_dpi,ds_dpi))
+    #save + dup ds
+    if dup_ds == 1 :
+        out.save(path_final+"/"+ds_final_name+ds_ex, dpi=(ds_dpi,ds_dpi))
+    elif dup_ds >1:   
+        for a in range(1,dup_ds):
+
+            out.save(path_final+"/"+ds_final_name+'_' + a +ds_ex, dpi=(ds_dpi,ds_dpi))
 
     print(ds_final_name," Done")
 
