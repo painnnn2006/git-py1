@@ -2,9 +2,9 @@ import numpy as np
 import os, glob, PIL, qrcode, openpyxl
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 from os import path
-import shutil, zipfile
-from zipfile import ZipFile
-from shutil import make_archive
+#import shutil, zipfile
+#from zipfile import ZipFile
+#from shutil import make_archive
 
 
 
@@ -50,15 +50,21 @@ for ds in list_ds:
     print(ds_final_name.split('_')[0]," begin render...")
     # print(path_final)
     im=Image.open(ds)
-    if ds_sp == 'WO':
+    if ds_sp == 'WO':   
+        
+        img_r = im.resize((ds_w_s,ds_h_s))
+        w_n = int(ds_w_s * 1.5)
+        x_n = int(ds_w_s * 0.5)
+        new = Image.new("RGBA",(w_n,ds_h_s),(0,0,0,0))
+        new.paste(img_r,(x_n ,0))
     
-        img_w = im.resize((ds_w_s,ds_h_s))
+        
     #    img_r = Image.new(img_w.mode,(ds_w_s,ds_h_s + 47),color=(255,255,255))
     #    d = ImageDraw.Draw(img_r)
     #    fnt= ImageFont.truetype("arial.ttf",30)
     #    d.text((ds_w_s/2+1000,ds_h_s),ds_final_name,font= fnt, fill=(0,0,0))
     #    img_r.paste(img_w,(0,0))        
-        img_r.save(path_final+"/"+ds_final_name+"."+ ds_ex, dpi=(ds_dpi,ds_dpi))
+        new.save(path_final+"/"+ds_final_name+ ds_ex, dpi=(ds_dpi,ds_dpi))
     
 
     #     else:
