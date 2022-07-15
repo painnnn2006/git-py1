@@ -1,10 +1,16 @@
 ﻿import os, glob, qrcode, openpyxl
-from PIL import Image, ImageDraw, ImageFont
+
+
+import os, glob, PIL, qrcode, openpyxl
+from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 from os import path
 
 # load database
 
+PIL.PngImagePlugin.MAX_TEXT_CHUNK= 10485760
+PIL.PngImagePlugin.MAX_TEXT_MEMORY= 971088604
 
+Image.MAX_IMAGE_PIXELS = None
 
 
 path_folder= input("input path here: ")

@@ -14,7 +14,7 @@ PIL.PngImagePlugin.MAX_TEXT_MEMORY= 971088604
 Image.MAX_IMAGE_PIXELS = None
 
 path_folder= input("input path here: ")
-
+code_run = input("rename or filter: ")
 list_png = glob.glob(path_folder+'/**/*.png', recursive=True)
 list_jpg = glob.glob(path_folder+'/**/*.jpg', recursive=True)
 list_csv = glob.glob(path_folder+'/**/*.csv', recursive=True)
@@ -23,10 +23,7 @@ list_csv = glob.glob(path_folder+'/**/*.csv', recursive=True)
 
 list_ds =[]
 
-# tao folder file final
-path_final = path_folder + "/final"
-if os.path.exists(path_final) == False: 
-    os.mkdir(path_final)
+
 
 
 
@@ -38,33 +35,65 @@ for p in list_png:
 for j in list_jpg:
     list_ds.append(j)
 
-print(list_csv[0])
-
-with open(list_csv[0]) as f:
+#print(list_csv[0])
+if code_run == 1:
+    with open(list_csv[0]) as f:
     # print(f.read())
-    reader = csv.reader(f)
-    i  = [row for row in reader]
+        reader = csv.reader(f)
+        i  = [row for row in reader]
     
-    i_columns =[list(x) for x in zip(*i)][1]
+        i_columns =[list(x) for x in zip(*i)][1]
 
     # print(i_columns)
 
 
 
 for ds in list_ds:
+
+
     #detect info product
     #img = Image.open(ds)
     ds_name= os.path.splitext(os.path.basename(ds))[0]
     ds_ex=os.path.splitext(os.path.basename(ds))[1]
 
     
-    row_num = i_columns.index(ds_name)
+    if code_run == "1":
+        # tao folder file final
+        path_final = path_folder + "/final"
+        if os.path.exists(path_final) == False: 
+            os.mkdir(path_final)
+        row_num = i_columns.index(ds_name)
     
-    block_newname = str(i[row_num][0])
-    shutil.copyfile(ds, path_final+"/"+ block_newname + ds_ex)
+        block_newname = str(i[row_num][0])
+        shutil.copyfile(ds, path_final+"/"+ block_newname + ds_ex)
 
-    #img.save(path_final+"/"+block_newname+ds_ex)
-    print(block_newname + "   done")
+        #img.save(path_final+"/"+block_newname+ds_ex)
+        print(block_newname + "   done")
+    elif code_run == "2":
 
-print("finish..........")
+        ds_final_name  = ds_name.split('_')[0] + '-' + ds_name.split('_')[2].split('.')[0]
+        
+        folder_name = ds_name.split('.')[1]
+        path_final = path_folder + "/" + folder_name
+        if os.path.exists(path_final) == False: 
+            os.mkdir(path_final)
+        shutil.copyfile(ds, path_final+"/"+ ds_final_name + ds_ex)
+
+        img = Image.open(path_final+"/"+ ds_final_name + ds_ex)
+        d = ImageDraw.Draw(img)
+        fnt= ImageFont.truetype("arial.ttf",80)
+        d.text((2900,4900),ds_final_name,font= fnt, fill=(0,0,0))
+        img.save(path_final+"/"+ ds_final_name + ds_ex, dpi=(300,300))
+
+        print(ds_final_name, " done!!!")
+
+
+
+
+
+            
+            
+    
+
+print("Finish..........")
 
