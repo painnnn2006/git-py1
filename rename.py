@@ -7,6 +7,10 @@ from os import path
 import os, glob, PIL, qrcode, openpyxl
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 
+import shutil, zipfile
+from zipfile import ZipFile
+from shutil import make_archive
+
 
 PIL.PngImagePlugin.MAX_TEXT_CHUNK= 10485760
 PIL.PngImagePlugin.MAX_TEXT_MEMORY= 971088604
@@ -18,7 +22,8 @@ code_run = input("rename or filter: ")
 list_png = glob.glob(path_folder+'/**/*.png', recursive=True)
 list_jpg = glob.glob(path_folder+'/**/*.jpg', recursive=True)
 list_csv = glob.glob(path_folder+'/**/*.csv', recursive=True)
-
+list_xlsx = glob.glob(path_folder+'/**/*.xlsx', recursive=True)
+list_fin = []
 
 
 list_ds =[]
@@ -77,6 +82,7 @@ for ds in list_ds:
         path_final = path_folder + "/" + folder_name
         if os.path.exists(path_final) == False: 
             os.mkdir(path_final)
+            list_fin.append(path_final)
         shutil.copyfile(ds, path_final+"/"+ ds_final_name + ds_ex)
 
         img = Image.open(path_final+"/"+ ds_final_name + ds_ex)
@@ -84,8 +90,17 @@ for ds in list_ds:
         fnt= ImageFont.truetype("arial.ttf",80)
         d.text((2900,4900),ds_final_name,font= fnt, fill=(0,0,0))
         img.save(path_final+"/"+ ds_final_name + ds_ex, dpi=(300,300))
+  #move xlsx
+for xlsx in list_xlsx:
+            xlsx_name = os.path.splitext(os.path.basename(xlsx))[0]
+            path_xlsx_final = path_folder + "/" + xlsx_name
+            shutil.move(xlsx,path_xlsx_final)
+for fin in list_fin:
+            shutil.make_archive(fin,"zip", fin)
+            print(fin.split('/')[1], "done")
 
-        print(ds_final_name, " done!!!")
+
+
 
 
 
