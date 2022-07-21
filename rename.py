@@ -90,6 +90,7 @@ for ds in list_ds:
         fnt= ImageFont.truetype("arial.ttf",80)
         d.text((2900,4900),ds_final_name,font= fnt, fill=(0,0,0))
         img.save(path_final+"/"+ ds_final_name + ds_ex, dpi=(300,300))
+        print(ds_final_name + "done!!!")
   #move xlsx
 for xlsx in list_xlsx:
             xlsx_name = os.path.splitext(os.path.basename(xlsx))[0]
