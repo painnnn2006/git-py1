@@ -4,7 +4,7 @@ import shutil
 
 from os import path
 
-import os, glob, PIL, qrcode, openpyxl
+import os, glob, PIL
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 
 import shutil, zipfile
