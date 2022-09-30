@@ -44,21 +44,22 @@ Set ws_layout = ThisWorkbook.Sheets("Layout")
 
 Dim ur_code, ur_code_br As String
 
-'
-'
+    '
+    '
 
-'get file xlsx
+    'get file xlsx
 
-        Dim path_folder_lot, path_lot, final_path, fac As String
-        
-        path_folder_lot = ws_db.Range("AA1").Value
+    Dim path_folder_lot, path_lot, final_path, fac As String
+
+    path_folder_lot = ws_db.Range("AA1").Value
         'get folder fix path
                 
         path_lot = path_folder_lot & "\" & Dir(path_folder_lot & "\*.xlsx")
         
         fac = Split(path_folder_lot, "_")(1)
-        final_path = ws_db.Range("AA1").Value
-        Debug.Print (final_path)
+    final_path = ws_db.Range("AA1").Value
+
+    Debug.Print (final_path)
         Debug.Print (fac)
         
         

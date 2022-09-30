@@ -38,7 +38,7 @@ Application.ScreenUpdating = False
 
     'get file xlsx
 
-    Dim path_folder_lot, path_lot_raw, path_lot, final_path, file_name_raw, lot_id, lot_type As String
+    Dim path_folder_lot, path_lot_raw, path_lot, final_path, file_name_raw, lot_id, lot_type, file_name, folder_name As String
 
     path_folder_lot = ws_data.Range("A2").Value
         path_lot_raw = path_folder_lot & "\" & Dir(path_folder_lot & "\*.xlsx")
@@ -51,16 +51,43 @@ Application.ScreenUpdating = False
         If lot_type = "URGENT" Then
             file_name = replace(file_name_raw, "URGENT-", "")
         ElseIf lot_type = "MissingOrder" Then
+            lot_type = "MissingOrder-URGENT"
             file_name = replace(file_name_raw, "MissingOrder-URGENT-", "")
         End If
 
-        path_lot = ""
-            'rename
-        Else
-            lot_type = ""
+        path_lot = path_folder_lot & "\" & file_name
+        'rename
+        name path_lot_raw as path_lot
+
+    Else
+        lot_type = ""
+        file_name = file_name_raw
     End If
 
+
     Debug.Print path_lot
+
+
+    'make folder final
+    final_path = ws_data.Range("A3").Value & "hiweb-design-tool\storage\app\public\excel\done\" & lot_id & "_" & split(wbinput.name, ".")(0)
+    folder_name = lot_id & "_" & split(wbinput.name, ".")(0)
+
+    If Dir(ws_data.Range("A3").Value & "hiweb-design-tool\storage\app\public\excel\done", vbDirectory) = "" Then
+
+        MkDir(ws_data.Range("A3").Value & "hiweb-design-tool\storage\app\public\excel\done")
+    End If
+
+
+    If Dir(final_path, vbDirectory) = "" Then
+
+
+        MkDir final_path
+
+
+    End If
+
+
+
     'open file
         
        Set wbinput = Workbooks.Open(path_lot)
@@ -91,41 +118,14 @@ Application.ScreenUpdating = False
     Kill (del_path)
       Application.Quit
       End If
-        
-        
-        
-'make folder final
-final_path = ws_data.Range("A3").Value & "hiweb-design-tool\storage\app\public\excel\processed\" & Split(Dir(path_folder_lot & "\*.xlsx"), ".")(0)
-
-    If Dir(ws_data.Range("A3").Value & "hiweb-design-tool\storage\app\public\excel\processed", vbDirectory) = "" Then
-    
-        MkDir (ws_data.Range("A3").Value & "hiweb-design-tool\storage\app\public\excel\processed")
-    End If
-    
-        
-    If Dir(final_path, vbDirectory) = "" Then
-    
-    
-        MkDir final_path
-        
-        
-    End If
-    
-        
-      
-
-        
-        
 
 
-      
-      
-      'fix name file
-      
-      
-   
+
+
+
+
     'dected product
-            For i = 1 To isheetnum
+    For i = 1 To isheetnum
                 
                 If wbinput.Sheets(i).Name = "SINGLE" Then
                         wbinput.Sheets("TOTAL").Range("B1").Value = wbinput.Sheets(i).Range("H2").Value
@@ -145,7 +145,7 @@ final_path = ws_data.Range("A3").Value & "hiweb-design-tool\storage\app\public\e
                                   
                                         wbinput.Sheets(i).Columns("E:I").EntireColumn.AutoFit
                                         
-                                        Else
+                                  Else
                                         
                                         wbinput.Sheets(i).Columns("D:I").EntireColumn.AutoFit
                                     
@@ -326,13 +326,15 @@ If fac = "SG" Or (fac <> "SG" And Excel.WorksheetFunction.CountIf(ws_pro_cn.Rang
                                                             final_path & "/" & wb_name, FileFormat:= _
                                                             xlOpenXMLWorkbook, CreateBackup:=False
                                                             wbinput.Close
-                                                            
-ws_data.Range("AA1").Value = final_path
-UserForm1.Show
 
-ws_data.Range("AA1").Value = ""
+        ws_data.Range("AA1").Value = final_path
 
-Debug.Print ("ds tool")
+        UserForm1.Show
+
+        ws_data.Range("AA1").Value = ""
+
+
+        Debug.Print ("ds tool")
 
 
 Else
@@ -355,13 +357,26 @@ End If
             
     
     Kill (old_path)
-    Call Module2.callApiDone
+
+
+    'callApiDone
+
+    Dim httpObject As Object
+Set httpObject = CreateObject("MSXML2.XMLHTTP")
+
+
+    sURL = "http://localhost/api/v1/lots/" & lot_id & "/done?path=" & folder_name & "&type=" & lot_type
+
+
+    sRequest = sURL
+    httpObject.Open "GET", sRequest, False
+httpObject.Send
 
 
 
-            
-            
-Application.ScreenUpdating = True
+
+
+    Application.ScreenUpdating = True
             
 
 'detect fix
