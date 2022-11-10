@@ -67,7 +67,7 @@ def get_image(image_path):
                 white_value.append(px)
             # elif image.mode =="RGB":
             #     white_value = pixel_values.count((255,255,255)) 
-        print(len(white_value))
+        #print(len(white_value))
         
         rate_trans = (len(tran_values) + len(white_value) ) / len(pixel_values)
     
