@@ -61,17 +61,18 @@ def get_image(image_path):
                     tran_values.append(px)
                 #print(px)
                 white_value = pixel_values.count((255,255,255,1))
-            elif image.mode =="RGB":
-                white_value = pixel_values.count((255,255,255))
+            # elif image.mode =="RGB":
+            #     white_value = pixel_values.count((255,255,255)) 
                 
-        rate_trans = (len(tran_values) + white_value) / len(pixel_values)
+        rate_trans = (len(tran_values) ) / len(pixel_values)
     
         #fill data in xlsx 
         ws.cell(column=1, row = i+1, value=ds_name)
         ws.cell(column=2, row = i+1, value=rate_trans)
         i = i+1
         print(ds_name + " rate trans = " + str(rate_trans))
-
+    
+    ws.cell(column=3, row = 1, value = "=AVERAGE(B:B)")
     wb.save(path_folder + "/check_px_trans.xlsx")
 
     return "Done " + str(len(list_ds)) + " ds"
