@@ -53,18 +53,21 @@ def get_image(image_path):
         ds_name = os.path.splitext(os.path.basename(ds))[0]
         width, height = image.size
         pixel_values = list(image.getdata())
+       #print(image.mode)
+        white_value = []
         tran_values = []
         for px in pixel_values:
             #print(px)
-            if image.mode == "RGBA": 
-                if px[3] == 0  :
-                    tran_values.append(px)
+            if image.mode == "RGBA" and px[3] == 0  :
+                tran_values.append(px)
                 #print(px)
-                white_value = pixel_values.count((255,255,255,1))
+            elif px[0] == 255 and px[1] == 255 and px[2]==255:
+                white_value.append(px)
             # elif image.mode =="RGB":
             #     white_value = pixel_values.count((255,255,255)) 
-                
-        rate_trans = (len(tran_values) ) / len(pixel_values)
+        print(len(white_value))
+        
+        rate_trans = (len(tran_values) + len(white_value) ) / len(pixel_values)
     
         #fill data in xlsx 
         ws.cell(column=1, row = i+1, value=ds_name)
