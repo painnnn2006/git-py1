@@ -59,9 +59,11 @@ def get_image(image_path):
         for px in pixel_values:
             #print(px)
             if image.mode == "RGBA" and px[3] == 0  :
+                print(ds_name)
                 tran_values.append(px)
                 #print(px)
             elif px[0] == 255 and px[1] == 255 and px[2]==255:
+                print(ds_name)
                 white_value.append(px)
             # elif image.mode =="RGB":
             #     white_value = pixel_values.count((255,255,255)) 
