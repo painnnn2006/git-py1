@@ -13,7 +13,7 @@
 
 
 import numpy
-import os, glob, PIL, qrcode, openpyxl
+import os, glob, PIL, openpyxl
 
 from os import path
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
@@ -56,29 +56,28 @@ def get_image(image_path):
         tran_values = []
         for px in pixel_values:
             #print(px)
-            if image.mode == "RGBA" and  px[3] == 0  :
-                tran_values.append(px)
+            if image.mode == "RGBA": 
+                if px[3] == 0  :
+                    tran_values.append(px)
                 #print(px)
-               
-            elif image.mode == "RGBA" and px[0] == 255 and px[1] == 255 and px[2] == 255 and px[3] == 1:
-                tran_values.append(px)
-            elif image.mode == "RGB" and px[0] == 255 and px[1] == 255 and px[2] == 255:
-                tran_values.append(px)
+                white_value = pixel_values.count((255,255,255,1))
+            elif image.mode =="RGB":
+                white_value = pixel_values.count((255,255,255))
                 
-        rate_trans = len(tran_values) / len(pixel_values)
+        rate_trans = (len(tran_values) + white_value) / len(pixel_values)
     
         #fill data in xlsx 
         ws.cell(column=1, row = i+1, value=ds_name)
-        ws.call(column=2, row = i+1, value=rate_trans)
+        ws.cell(column=2, row = i+1, value=rate_trans)
         i = i+1
-        print(ds_name + "check done")
+        print(ds_name + " rate trans = " + str(rate_trans))
 
-    ws.save(path_folder + "/check_px_trans.xlsx", recursive=true)
+    wb.save(path_folder + "/check_px_trans.xlsx")
 
-    return "Done " + len(list_ds) + " ds"
+    return "Done " + str(len(list_ds)) + " ds"
 
 
 path_folder = input("path folder: " )
-image = get_image(path_img)
+image = get_image(path_folder)
 print(image)
 #print(len(tran_values))
