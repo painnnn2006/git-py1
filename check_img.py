@@ -75,7 +75,10 @@ def get_image(image_path):
         i = i+1
         print(ds_name + " rate trans = " + str(rate_trans))
     
-    ws.cell(column=3, row = 1, value = "=AVERAGE(B:B)")
+    ws.cell(column=3, row = 1, value = "Transparent rate")
+    ws.cell(column=3, row = 2, value = "=AVERAGE(B:B)")
+    ws.cell(column=4, row = 1, value = "Color rate")
+    ws.cell(column=4, row = 2, value = "=1-C2")
     wb.save(path_folder + "/check_px_trans.xlsx")
 
     return "Done " + str(len(list_ds)) + " ds"
